@@ -1,4 +1,4 @@
-package com.irinnovative.onepagesigninsignup;
+package com.nith.electiveManager;
 
 import android.os.Bundle;
 import android.support.percent.PercentLayoutHelper;
