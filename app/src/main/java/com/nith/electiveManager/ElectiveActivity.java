@@ -1,26 +1,23 @@
 package com.nith.electiveManager;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.concurrent.ExecutionException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ElectiveActivity extends AppCompatActivity {
 
@@ -28,30 +25,63 @@ public class ElectiveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_elective);
+        Button button = findViewById(R.id.submit_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(ElectiveActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+                builder.setTitle("Are you sure?")
+                        .setMessage("Once submitted, you can't resubmit again")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                                Toast.makeText(ElectiveActivity.this, "Your electives have been recorded.", Toast.LENGTH_LONG).show();
+                                finish();
+                                startActivity(new Intent(ElectiveActivity.this, MainActivity.class));
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.alert_light_frame)
+                        .show();
+            }
+        });
+
+        ArrayList<Elective> electives = new ArrayList<>();
         try {
             String response = new FetchElectiveTask().execute().get();
             int start = response.indexOf("[");
             response = response.substring(start);
             String splits[] = response.split("\\{");
-            for (int i=0; i<splits.length; i++) {
-                String elective="", code="";
-                if (i>0) {
+            for (int i = 0; i < splits.length; i++) {
+                String elective = "", code = "";
+                if (i > 0) {
                     String subjCode[] = splits[i].split(",");
                     code = subjCode[1];
                     elective = subjCode[2];
                     code = code.split(":")[1];
-                    code = code.substring(1, code.length()-1);
+                    code = code.substring(1, code.length() - 1);
                     elective = elective.split(":")[1];
-                    elective = elective.substring(1, elective.length()-1);
-                    //Log.d("+++++++++", "Code: "+code+", Elective: "+elective);
+                    elective = elective.substring(1, elective.length() - 1);
+                    // Log.d("+++++++++", "Code: "+code+", Elective: "+elective);
+                    electives.add(new Elective(elective, code));
                 }
             }
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+
+        RecyclerView recyclerView = findViewById(R.id.recv);
+        ElectiveAdapter electiveAdapter = new ElectiveAdapter(electives);
+        recyclerView.setLayoutManager(new LinearLayoutManager(ElectiveActivity.this));
+        recyclerView.setAdapter(electiveAdapter);
     }
 
     public class FetchElectiveTask extends AsyncTask<Void, Void, String> {
