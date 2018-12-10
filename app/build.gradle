@@ -20,7 +20,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.github.woxthebox:draglistview:1.6.3'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:percent:27.1.1'
     implementation 'com.android.support:design:27.1.1'
