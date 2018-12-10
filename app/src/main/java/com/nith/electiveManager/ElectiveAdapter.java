@@ -1,5 +1,6 @@
 package com.nith.electiveManager;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,9 +15,12 @@ import java.util.ArrayList;
 
 public class ElectiveAdapter extends RecyclerView.Adapter<ElectiveAdapter.ElectiveViewHolder> {
 
+    private int priorities = 0;
     private ArrayList<Elective> electives;
-    ElectiveAdapter(ArrayList<Elective> electives) {
+    private Context context;
+    ElectiveAdapter(ArrayList<Elective> electives, Context context) {
         this.electives = electives;
+        this.context = context;
     }
 
     class ElectiveViewHolder extends RecyclerView.ViewHolder {
@@ -34,10 +38,23 @@ public class ElectiveAdapter extends RecyclerView.Adapter<ElectiveAdapter.Electi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ElectiveViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ElectiveViewHolder holder, final int position) {
         holder.checkableChipView.setText(electives.get(position).getElective());
-        if (holder.checkableChipView.isChecked())
-            electives.get(position).setSelected(true);
+        holder.checkableChipView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.checkableChipView.isChecked()) {
+                    electives.get(position).setSelected(true);
+                    priorities++;
+                    Toast.makeText(context, "Priority: "+priorities, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    electives.get(position).setSelected(false);
+                    priorities--;
+                    Toast.makeText(context, "Priority: "+priorities, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override

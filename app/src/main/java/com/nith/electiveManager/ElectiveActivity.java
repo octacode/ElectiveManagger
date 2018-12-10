@@ -63,7 +63,16 @@ public class ElectiveActivity extends AppCompatActivity {
         }
 
         RecyclerView recyclerView = findViewById(R.id.recv);
-        final ElectiveAdapter electiveAdapter = new ElectiveAdapter(electives);
+
+        findViewById(R.id.reset_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                startActivity(new Intent(ElectiveActivity.this, ElectiveActivity.class));
+            }
+        });
+
+        final ElectiveAdapter electiveAdapter = new ElectiveAdapter(electives, ElectiveActivity.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(ElectiveActivity.this));
         recyclerView.setAdapter(electiveAdapter);
 
@@ -84,7 +93,7 @@ public class ElectiveActivity extends AppCompatActivity {
                                 Log.d("++++++", String.valueOf(electivesAl.size()));
                                 for (int k = 0; k < electivesAl.size(); k++) {
                                     if (electivesAl.get(k).isSelected()) {
-                                        electivesTotal = electivesTotal + electivesAl.get(k) + ";";
+                                        electivesTotal = electivesTotal + electivesAl.get(k).getElective() + ";";
                                         Log.d("++++++++++", String.valueOf(electivesAl.get(k).isSelected()));
                                     }
                                 }
@@ -94,12 +103,14 @@ public class ElectiveActivity extends AppCompatActivity {
                                     @Override
                                     public void onResponse(Call<String> call, Response<String> response) {
                                         ApiClient.setSubmit(true);
+                                        finish();
                                         startActivity(new Intent(ElectiveActivity.this, FinishActivity.class));
                                     }
 
                                     @Override
                                     public void onFailure(Call<String> call, Throwable t) {
                                         ApiClient.setSubmit(true);
+                                        finish();
                                         startActivity(new Intent(ElectiveActivity.this, FinishActivity.class));
                                     }
                                 });
