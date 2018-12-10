@@ -36,7 +36,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        apiService = ApiClient.getClient().create(ApiInterface.class);
+        if (ApiClient.getLogin()) {
+            startActivity(new Intent(this, ElectiveActivity.class));
+        }
+        apiService = ApiClient.getClient(this).create(ApiInterface.class);
         llSignin = (LinearLayout) findViewById(R.id.llSignin);
         llSignin.setOnClickListener(this);
         //LinearLayout singnin =(LinearLayout)findViewById(R.id.signin);
@@ -155,12 +158,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Log.d("+++++++++++++++", response.body());
+                ApiClient.setLogin(true);
                 startActivity(new Intent(MainActivity.this, ElectiveActivity.class));
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "SignUp success", Toast.LENGTH_SHORT).show();
+                ApiClient.setLogin(true);
                 startActivity(new Intent(MainActivity.this, ElectiveActivity.class));
             }
         });
@@ -172,11 +177,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 Log.d("+++++++++++++", response.body());
+                ApiClient.setLogin(true);
                 startActivity(new Intent(MainActivity.this, ElectiveActivity.class));
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
+                ApiClient.setLogin(true);
                 Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(MainActivity.this, ElectiveActivity.class));
             }

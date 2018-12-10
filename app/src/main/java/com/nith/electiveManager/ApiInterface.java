@@ -23,4 +23,7 @@ public interface ApiInterface {
 
     @GET("student_login")
     Call<String> doLogin (@Query("roll_no") String rollNo, @Query("password") String password);
+
+    @GET("submit_electives")
+    Call<String> submitElectives (@Query("electives") String electives);
 }

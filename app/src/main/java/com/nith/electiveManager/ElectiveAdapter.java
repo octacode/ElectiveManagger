@@ -2,9 +2,11 @@ package com.nith.electiveManager;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.github.okdroid.checkablechipview.CheckableChipView;
 
@@ -34,11 +36,16 @@ public class ElectiveAdapter extends RecyclerView.Adapter<ElectiveAdapter.Electi
     @Override
     public void onBindViewHolder(@NonNull ElectiveViewHolder holder, int position) {
         holder.checkableChipView.setText(electives.get(position).getElective());
-
+        if (holder.checkableChipView.isChecked())
+            electives.get(position).setSelected(true);
     }
 
     @Override
     public int getItemCount() {
         return electives.size();
+    }
+
+    public ArrayList<Elective> getElectives() {
+        return electives;
     }
 }
