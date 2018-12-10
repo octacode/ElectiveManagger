@@ -29,6 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Roll number"
+                android:id="@+id/roll_no"
                 android:textColor="#FFFFFF" />
         </android.support.design.widget.TextInputLayout>
 
@@ -42,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Full name"
+                android:id="@+id/full_name"
                 android:textColor="#FFFFFF" />
         </android.support.design.widget.TextInputLayout>
 
@@ -55,6 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
+                android:id="@+id/password"
                 android:inputType="textPassword"
                 android:textColor="#FFFFFF" />
         </android.support.design.widget.TextInputLayout>
@@ -69,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Father's name"
+                android:id="@+id/f_name"
                 android:textColor="#FFFFFF" />
         </android.support.design.widget.TextInputLayout>
 
@@ -82,6 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Date of birth"
+                android:id="@+id/dob"
                 android:textColor="#FFFFFF" />
         </android.support.design.widget.TextInputLayout>
 
@@ -95,6 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Registration Number"
+                android:id="@+id/reg_no"
                 android:textColor="#FFFFFF" />
         </android.support.design.widget.TextInputLayout>
 
@@ -108,6 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
+                android:id="@+id/email"
                 android:inputType="textEmailAddress"
                 android:textColor="#FFFFFF" />
         </android.support.design.widget.TextInputLayout>
@@ -123,6 +130,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Mobile Number"
                 android:inputType="phone"
+                android:id="@+id/mobile"
                 android:textColor="#FFFFFF" />
         </android.support.design.widget.TextInputLayout>
 
@@ -136,6 +144,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Department"
+                android:id="@+id/dept"
                 android:textColor="#FFFFFF" />
         </android.support.design.widget.TextInputLayout>
 
